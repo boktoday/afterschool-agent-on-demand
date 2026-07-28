@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afterschool Agent · onetoeight — Build Your Own Local AI Companion</title>
+<meta name="description" content="A four-week live programme where your teen builds a personal AI agent on Hermes — local-first, private, designed around the eight essentials of onetoeight.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4; margin: 22mm 20mm 20mm 20mm; }
+@page :first { margin: 0; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink);
+  font-size: 11pt;
+  line-height: 1.7;
+  background: var(--cream);
+}
+:root {
+  --forest: #5C3A2E;
+  --forest-dark: #3D2820;
+  --forest-light: #7A5244;
+  --amber: #A46447;
+  --amber-light: #C4805A;
+  --terracotta: #A46447;
+  --cream: #f5f2ed;
+  --cream-dark: #f0ebe0;
+  --ink: #2a2520;
+  --muted: #6b6358;
+  --white: #ffffff;
+  --slate: #4a5568;
+  --slate-light: #718096;
+  --code-bg: #2a2520;
+  --code-fg: #f5f2ed;
+  --success: #4a6b3c;
+}
+
+/* ===== COVER ===== */
+.cover {
+  min-height: 80vh;
+  background: var(--forest-dark);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 50px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(164,100,71,0.15) 0%, transparent 60%);
+  border-radius: 50%;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(92,58,46,0.2) 0%, transparent 60%);
+  border-radius: 50%;
+}
+.cover-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; width: 100%; }
+.cover-label { font-size: 9pt; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber-light); font-weight: 600; margin-bottom: 1.5rem; }
+.cover-title { font-family: 'Fraunces', serif; font-size: 56pt; font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.cover-title em { font-style: italic; font-weight: 300; color: var(--amber-light); }
+.cover-sub { font-family: 'Fraunces', serif; font-size: 18pt; font-weight: 300; color: rgba(250,247,242,0.75); margin-bottom: 2rem; font-style: italic; line-height: 1.4; }
+.cover-tagline { font-size: 11pt; color: rgba(250,247,242,0.65); line-height: 1.7; max-width: 560px; margin-bottom: 2.5rem; }
+.cover-cta {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--cream);
+  padding: 14px 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 10.5pt;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.cover-cta:hover { background: var(--amber-light); }
+.cover-meta { margin-top: 3rem; font-size: 9pt; color: rgba(250,247,242,0.4); letter-spacing: 0.1em; }
+
+/* ===== SECTIONS ===== */
+.section { max-width: 780px; margin: 0 auto; padding: 60px 40px; }
+.section + .section { padding-top: 20px; }
+.section-num { font-family: 'Fraunces', serif; font-size: 10pt; color: var(--amber); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+.section-title { font-family: 'Fraunces', serif; font-size: 32pt; font-weight: 500; color: var(--forest-dark); margin-bottom: 1.5rem; line-height: 1.15; letter-spacing: -0.01em; }
+.section-lede { font-size: 12pt; line-height: 1.7; color: var(--slate); margin-bottom: 2rem; font-weight: 300; }
+h2 { font-family: 'Fraunces', serif; font-size: 20pt; color: var(--forest-dark); margin: 2.5rem 0 1rem; font-weight: 500; line-height: 1.2; }
+h3 { font-family: 'Fraunces', serif; font-size: 14pt; color: var(--forest-dark); margin: 1.8rem 0 0.8rem; font-weight: 500; }
+h4 { font-family: 'Inter', sans-serif; font-size: 11pt; color: var(--forest); margin: 1.2rem 0 0.5rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+p { margin-bottom: 1rem; }
+ul, ol { padding-left: 1.4rem; margin-bottom: 1rem; }
+li { margin-bottom: 0.5rem; }
+strong { font-weight: 600; color: var(--forest-dark); }
+em { font-style: italic; }
+a { color: var(--amber); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+a:hover { border-bottom-color: var(--amber); }
+
+/* ===== STORY ===== */
+.story { margin: 2rem 0; padding: 1.5rem 1.8rem; background: var(--cream-dark); border-radius: 12px; }
+.story-label { font-size: 8pt; letter-spacing: 0.15em; text-transform: uppercase; color: var(--terracotta); font-weight: 700; margin-bottom: 0.8rem; }
+.story p { font-size: 10.5pt; color: var(--ink); margin-bottom: 0.8rem; }
+.story p:last-child { margin-bottom: 0; }
+
+/* ===== WISDOM ===== */
+.wisdom { margin: 2rem 0; padding: 1.5rem 1.8rem; background: linear-gradient(135deg, #f5efe2 0%, #faf7f2 100%); border: 1px solid var(--cream-dark); border-radius: 12px; }
+.wisdom-label { font-size: 8pt; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber); font-weight: 600; margin-bottom: 0.6rem; }
+.wisdom-text { font-family: 'Fraunces', serif; font-size: 12pt; font-style: italic; color: var(--forest-dark); line-height: 1.6; }
+.wisdom-source { display: block; margin-top: 0.5rem; font-size: 9pt; color: var(--muted); font-style: normal; }
+
+/* ===== REFLECTION ===== */
+.reflection { margin: 2rem 0; padding: 1.3rem 1.5rem; background: #fdf6ec; border-left: 4px solid var(--amber); border-radius: 0 8px 8px 0; }
+.reflection-label { font-size: 8pt; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber); font-weight: 700; margin-bottom: 0.6rem; }
+.reflection p { font-size: 10.5pt; color: var(--ink); margin-bottom: 0; }
+
+/* ===== CODE ===== */
+pre {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  padding: 1.2rem 1.5rem;
+  border-radius: 8px;
+  font-size: 9.5pt;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 1.2rem 0;
+}
+code { font-family: 'JetBrains Mono', monospace; background: var(--cream-dark); padding: 2px 6px; border-radius: 3px; font-size: 0.85em; color: var(--forest-dark); }
+pre code { background: transparent; padding: 0; color: var(--code-fg); font-size: 9.5pt; }
+.cmd { color: #C4805A; }
+.comment { color: #8a8278; font-style: italic; }
+.string { color: #b8c99e; }
+.kw { color: #d4a574; }
+
+/* ===== ESSENTIALS GRID ===== */
+.essentials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin: 2rem 0;
+}
+.essential-card {
+  background: var(--white);
+  border: 1.5px solid var(--cream-dark);
+  border-radius: 12px;
+  padding: 1.3rem;
+}
+.essential-num { font-family: 'Fraunces', serif; font-size: 9pt; color: var(--amber); letter-spacing: 0.2em; font-weight: 600; margin-bottom: 0.5rem; }
+.essential-emoji { font-size: 24pt; margin-bottom: 0.3rem; display: block; }
+.essential-title { font-family: 'Fraunces', serif; font-size: 14pt; color: var(--forest-dark); margin-bottom: 0.5rem; font-weight: 500; }
+.essential-act { font-size: 9.5pt; color: var(--slate); line-height: 1.55; }
+
+/* ===== TIER CARDS ===== */
+.tiers { margin: 2rem 0; }
+.tier-card {
+  background: var(--white);
+  border: 2px solid var(--cream-dark);
+  border-radius: 12px;
+  padding: 1.8rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+.tier-card.recommended { border-color: var(--amber); box-shadow: 0 0 0 1px var(--amber); }
+.tier-badge {
+  position: absolute;
+  top: -10px; right: 16px;
+  background: var(--amber);
+  color: var(--cream);
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.tier-name { font-family: 'Fraunces', serif; font-size: 18pt; color: var(--forest-dark); margin-bottom: 0.4rem; font-weight: 500; }
+.tier-price { font-size: 11pt; color: var(--slate); margin-bottom: 1rem; }
+.tier-price strong { font-size: 14pt; color: var(--forest-dark); }
+.tier-desc { font-size: 10pt; color: var(--slate); margin-bottom: 0.8rem; line-height: 1.6; }
+.tier-best { font-size: 9pt; color: var(--muted); font-style: italic; }
+
+/* ===== RITUAL ===== */
+.ritual {
+  margin: 2rem 0;
+  padding: 1.8rem;
+  background: var(--white);
+  border-radius: 12px;
+  border-left: 4px solid var(--forest);
+}
+.ritual-time { font-size: 8pt; letter-spacing: 0.15em; text-transform: uppercase; color: var(--forest); font-weight: 700; margin-bottom: 0.3rem; }
+.ritual-name { font-family: 'Fraunces', serif; font-size: 18pt; color: var(--forest-dark); margin-bottom: 0.6rem; font-weight: 500; }
+.ritual-desc { font-size: 10.5pt; color: var(--slate); margin-bottom: 1rem; line-height: 1.6; }
+
+/* ===== SCRIPT BLOCK (chat transcript style) ===== */
+.script {
+  background: #fdf6ec;
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  margin: 1.2rem 0;
+  border-left: 3px solid var(--amber-light);
+}
+.script-line { display: flex; gap: 0.8rem; margin-bottom: 0.6rem; align-items: flex-start; }
+.script-line:last-child { margin-bottom: 0; }
+.script-who { font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; font-weight: 600; color: var(--forest); min-width: 70px; padding-top: 2px; }
+.script-who.teen { color: var(--amber); }
+.script-said { font-size: 10pt; color: var(--ink); line-height: 1.55; }
+
+/* ===== CHECKLIST ===== */
+.checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+.checklist li { padding: 0.5rem 0 0.5rem 1.8rem; position: relative; font-size: 10.5pt; }
+.checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--forest-light); font-size: 14px; }
+.checklist li.done { color: var(--muted); text-decoration: line-through; }
+.checklist li.done::before { content: '✓'; color: var(--success); }
+
+/* ===== TABLE ===== */
+.spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 9.5pt; }
+.spec-table th { text-align: left; padding: 0.7rem 0.8rem; background: var(--forest-dark); color: var(--cream); font-weight: 600; letter-spacing: 0.05em; font-size: 9pt; text-transform: uppercase; }
+.spec-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--cream-dark); }
+.spec-table tr:last-child td { border-bottom: none; }
+
+/* ===== FAQ ===== */
+.faq-item { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--cream-dark); }
+.faq-q { font-family: 'Fraunces', serif; font-size: 13pt; color: var(--forest-dark); font-weight: 500; margin-bottom: 0.5rem; cursor: pointer; }
+.faq-a { font-size: 10.5pt; color: var(--slate); line-height: 1.65; }
+
+/* ===== CALLOUT ===== */
+.callout {
+  margin: 2rem 0;
+  padding: 1.5rem 1.8rem;
+  background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest) 100%);
+  color: var(--cream);
+  border-radius: 12px;
+}
+.callout-label { font-size: 8pt; letter-spacing: 0.15em; text-transform: uppercase; color: var(--amber-light); font-weight: 700; margin-bottom: 0.8rem; }
+.callout h3 { color: var(--cream); margin-bottom: 0.8rem; }
+.callout p { color: rgba(250,247,242,0.85); font-size: 10.5pt; margin-bottom: 0.6rem; }
+.callout ul { color: rgba(250,247,242,0.85); }
+.callout li { margin-bottom: 0.4rem; font-size: 10pt; }
+.callout code { background: rgba(0,0,0,0.25); color: var(--amber-light); }
+.callout a { color: var(--amber-light); border-bottom-color: rgba(196,128,90,0.5); }
+
+/* ===== TIMELINE ===== */
+.timeline { margin: 2rem 0; padding-left: 0; list-style: none; }
+.timeline li {
+  position: relative;
+  padding: 0 0 1.5rem 2.5rem;
+  border-left: 2px solid var(--cream-dark);
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+}
+.timeline li:last-child { padding-bottom: 0; border-left-color: transparent; }
+.timeline-dot {
+  position: absolute;
+  left: -7px;
+  top: 4px;
+  width: 12px; height: 12px;
+  background: var(--amber);
+  border-radius: 50%;
+  border: 2px solid var(--cream);
+}
+.timeline-week { font-family: 'Fraunces', serif; font-size: 14pt; color: var(--forest-dark); margin-bottom: 0.3rem; font-weight: 500; }
+.timeline-body { font-size: 10pt; color: var(--slate); line-height: 1.6; }
+
+/* ===== SKILL CARD ===== */
+.skill-card {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: 12px;
+}
+.skill-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed var(--cream-dark);
+}
+.skill-card-emoji { font-size: 22pt; }
+.skill-card-name { font-family: 'JetBrains Mono', monospace; font-size: 10pt; color: var(--forest); font-weight: 600; }
+.skill-card-title { font-family: 'Fraunces', serif; font-size: 14pt; color: var(--forest-dark); font-weight: 500; }
+.skill-card-desc { font-size: 10pt; color: var(--slate); line-height: 1.55; margin-bottom: 0.8rem; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--forest-dark);
+  color: var(--cream);
+  padding: 50px 40px;
+  text-align: center;
+  margin-top: 60px;
+}
+footer h3 { font-family: 'Fraunces', serif; color: var(--cream); font-size: 18pt; font-weight: 400; margin-bottom: 1rem; }
+footer p { color: rgba(250,247,242,0.6); font-size: 9.5pt; margin-bottom: 0.5rem; }
+footer a { color: var(--amber-light); }
+.footer-cta {
+  display: inline-block;
+  margin-top: 1.5rem;
+  background: var(--amber);
+  color: var(--cream);
+  padding: 12px 28px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 10pt;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+}
+.footer-cta:hover { background: var(--amber-light); }
+.footer-meta { margin-top: 2rem; font-size: 8pt; color: rgba(250,247,242,0.35); letter-spacing: 0.1em; }
+
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 768px) {
+  body { font-size: 12pt; }
+  .cover { padding: 40px 25px; min-height: 70vh; }
+  .cover-title { font-size: 36pt; }
+  .cover-sub { font-size: 14pt; }
+  .section { padding: 40px 22px; }
+  .section-title { font-size: 24pt; }
+  .ritual { padding: 1.3rem; }
+  .essentials { grid-template-columns: 1fr; }
+  .spec-table { font-size: 8.5pt; }
+  .spec-table th, .spec-table td { padding: 0.5rem 0.4rem; }
+  pre { font-size: 8.5pt; padding: 1rem; }
+}
+@media screen and (max-width: 480px) {
+  body { font-size: 11pt; }
+  .cover-title { font-size: 28pt; }
+  .section-title { font-size: 20pt; }
+  .ritual-name { font-size: 15pt; }
+  .script-line { flex-direction: column; gap: 0.2rem; }
+  .script-who { min-width: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== COVER ===== -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-label">Afterschool Agent · Live 4-Week Programme</div>
+    <h1 class="cover-title">Your teen builds<br>their own <em>AI agent</em>.</h1>
+    <p class="cover-sub">One that teaches life skills and guides them to grow.</p>
+    <p class="cover-tagline">A live, guided programme where young people learn to build a local-first AI companion on Hermes — walking through the eight essentials of onetoeight, with personalised activities designed for their life. The agent also helps with homework, planning, and the day ahead. No coding experience needed. No cloud accounts. Everything lives on their device.</p>
+    <a href="#setup" class="cover-cta">Set Up Your Agent →</a>
+    <div class="cover-meta">For ages 12–17 · Live Mon · Wed · Fri 4:30 PM · $44.88/week · or self-serve free</div>
+  </div>
+</div>
+
+<!-- ===== THE IDEA ===== -->
+<div class="section">
+  <div class="section-num">Part 1 — The Idea</div>
+  <h2 class="section-title">An afterschool hour where your teen learns to <em>build</em>, not just <em>consume</em>.</h2>
+  <p>Every Monday, Wednesday, and Friday at 4:30 PM, your teen logs on to a live webcast. For one hour, they work with a screened instructor to build a personal AI agent using <a href="https://hermes-agent.nousresearch.com">Hermes</a> — a free, local-first agent platform that runs on a laptop or desktop.</p>
+  <p>No cloud accounts. No data leaving the device. The agent's primary job is to guide your teen through the eight essentials of <a href="https://olive-virtue-vvnh.here.now">onetoeight</a> — one essential per week, with personalised activities the agent designs for them. Homework help, planning, and research are the bonus, not the point.</p>
+
+  <div class="wisdom">
+    <div class="wisdom-label">The Central Idea</div>
+    <p class="wisdom-text">We gave you screens. We didn't give you roots. The eight essentials are how you grow them.</p>
+    <span class="wisdom-source">— onetoeight</span>
+  </div>
+
+  <h3>What your teen gets</h3>
+  <ol>
+    <li>A working AI agent running on your home computer — free, no subscriptions, no cloud.</li>
+    <li>Guided learning through all eight essentials, one per week, with personalised activities the agent creates for them.</li>
+    <li>The three daily rituals: Afterschool Chat, Planning Session, Morning Minute.</li>
+    <li>An agent that knows which essential they're working on and weaves it into every conversation.</li>
+    <li>Skills they can reuse — the same agent can help with homework, research, and planning afterwards.</li>
+  </ol>
+
+  <h3>What parents get</h3>
+  <ol>
+    <li>Peace of mind — everything runs locally, no data sent to third parties.</li>
+    <li>A structured four-week programme anchored to the eight essentials.</li>
+    <li>Live supervision — every session is a real-time webcast with a screened instructor.</li>
+    <li>Flexible attendance — come any Mon/Wed/Fri, miss a day and catch the next.</li>
+    <li>A tool the whole family can use once it's built.</li>
+  </ol>
+</div>
+
+<!-- ===== THE THREE RITUALS ===== -->
+<div class="section">
+  <div class="section-num">Part 2 — The Three Rituals</div>
+  <h2 class="section-title">Three things the agent does every <em>single day</em>.</h2>
+  <p class="section-lede">Over four weeks, your teen configures their agent to perform three daily rituals. By the end, these run automatically — the agent greets them after school, helps them plan, and speaks a one-minute morning briefing when they wake up.</p>
+
+  <div class="ritual">
+    <div class="ritual-time">Ritual 1 · After School · 4:30 PM</div>
+    <h3 class="ritual-name">The Afterschool Chat</h3>
+    <p class="ritual-desc">Your teen sits down, opens their agent, and talks. How was the day? What's weighing on them? What's the plan tonight? The agent listens, reflects, and helps them decompress before screen time takes over. It's a grounding conversation — the essential of silence and real community in practice.</p>
+    <div class="script">
+      <div class="script-line"><span class="script-who teen">teen:</span><span class="script-said">hey, school was okay. kind of tired. got a maths test thursday.</span></div>
+      <div class="script-line"><span class="script-who">agent:</span><span class="script-said">good to hear from you. let's be real — tired and a test on thursday. this week's essential is stillness. want to try one minute of quiet before we plan, or do you need to talk first?</span></div>
+      <div class="script-line"><span class="script-who teen">teen:</span><span class="script-said">maybe a minute.</span></div>
+      <div class="script-line"><span class="script-who">agent:</span><span class="script-said">alright. timer starts now. one minute of stillness. i'll wait.</span></div>
+      <div class="script-line"><span class="script-who">agent:</span><span class="script-said">…</span></div>
+      <div class="script-line"><span class="script-who">agent:</span><span class="script-said">welcome back. how was that? now let's look at thursday — want me to draft a study plan, 30 minutes tuesday, 45 wednesday, review thursday morning?</span></div>
+      <div class="script-line"><span class="script-who teen">teen:</span><span class="script-said">yeah, and can you make the morning minute about the test?</span></div>
+      <div class="script-line"><span class="script-who">agent:</span><span class="script-said">done. your morning minute tomorrow will open with: "thursday's your maths test. you've prepared. take one breath. then trust the work." and we'll try another stillness minute at the end — that's your Essential 1 challenge for today.</span></div>
+    </div>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-time">Ritual 2 · Evening · Anytime, Self-paced</div>
+    <h3 class="ritual-name">The Planning Session</h3>
+    <p class="ritual-desc">Before bed, the agent helps them map tomorrow. School tasks, homework deadlines, the essential they're working on this week, one real-world thing they want to do. The agent drafts the plan, your teen edits it, and it saves locally. No app, no account, no cloud sync — just their agent remembering for them.</p>
+  </div>
+
+  <div class="ritual">
+    <div class="ritual-time">Ritual 3 · Every Morning · Auto-generated</div>
+    <h3 class="ritual-name">The Morning Minute</h3>
+    <p class="ritual-desc">This is the magic. Each morning, the agent generates a one-minute text-to-speech audio briefing — their plan, their essential for the week, a thought to carry, a breath to take. Your teen wakes up, presses play, and starts the day with intention instead of a feed. The agent builds it overnight from yesterday's plan.</p>
+    <div class="callout">
+      <div class="callout-label">Sample Morning Minute — Tuesday, Week 1</div>
+      <p><em>"Good morning. It's Tuesday. You have maths prep tonight — thirty minutes, just the practice paper. Yesterday's stillness went well; let's do another minute at 7 AM tomorrow. One thing to carry today: nothing has to be perfect. Done is better than perfect. Now go."</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== THE EIGHT ESSENTIALS ===== -->
+<div class="section">
+  <div class="section-num">Part 3 — The Eight Essentials</div>
+  <h2 class="section-title">The agent doesn't just <em>chat</em>. It teaches.</h2>
+  <p>The onetoeight programme has eight essentials — the eight insights a screen-born generation needs. Your teen's agent is configured to teach each one, one per week, with activities it personalises for who they are. Not generic worksheets. Not a one-size app. The agent learns your teen and tailors the essential to their world.</p>
+
+  <div class="essentials">
+    <div class="essential-card">
+      <div class="essential-num">Essential 01</div>
+      <span class="essential-emoji">🕯️</span>
+      <div class="essential-title">Silence & Stillness</div>
+      <p class="essential-act"><strong>Agent activity:</strong> guides a one-minute silence timer, asks what they noticed, and sets a daily "stillness challenge" scaled to their comfort level.</p>
+    </div>
+    <div class="essential-card">
+      <div class="essential-num">Essential 02</div>
+      <span class="essential-emoji">🏃</span>
+      <div class="essential-title">Body as Temple</div>
+      <p class="essential-act"><strong>Agent activity:</strong> tracks one health habit your teen chooses — sleep, movement, hydration — and checks in daily without nagging.</p>
+    </div>
+    <div class="essential-card">
+      <div class="essential-num">Essential 03</div>
+      <span class="essential-emoji">📖</span>
+      <div class="essential-title">Scripture & Wisdom</div>
+      <p class="essential-act"><strong>Agent activity:</strong> shares a short passage each morning, asks one reflection question, and connects it to something happening in their week.</p>
+    </div>
+    <div class="essential-card">
+      <div class="essential-num">Essential 04</div>
+      <span class="essential-emoji">🌿</span>
+      <div class="essential-title">Nature Connection</div>
+      <p class="essential-act"><strong>Agent activity:</strong> suggests one outdoor action based on their location and weather — a walk, a sit, a photo of something growing — and asks them to report back.</p>
+    </div>
+    <div class="essential-card">
+      <div class="essential-num">Essential 05</div>
+      <span class="essential-emoji">📱</span>
+      <div class="essential-title">Digital Self-Defence</div>
+      <p class="essential-act"><strong>Agent activity:</strong> runs a weekly screen-time review, helps them set one boundary, and teaches them how algorithms work so they can recognise the patterns.</p>
+    </div>
+    <div class="essential-card">
+      <div class="essential-num">Essential 06</div>
+      <span class="essential-emoji">🔧</span>
+      <div class="essential-title">Life Skills</div>
+      <p class="essential-act"><strong>Agent activity:</strong> picks one real-world skill each week — cooking a meal, writing an email, managing money — and breaks it into doable steps they can tick off.</p>
+    </div>
+    <div class="essential-card">
+      <div class="essential-num">Essential 07</div>
+      <span class="essential-emoji">🤝</span>
+      <div class="essential-title">Real Community</div>
+      <p class="essential-act"><strong>Agent activity:</strong> prompts one real-world connection action — a conversation, a thank-you, a visit — and follows up to ask how it went.</p>
+    </div>
+    <div class="essential-card">
+      <div class="essential-num">Essential 08</div>
+      <span class="essential-emoji">⭐</span>
+      <div class="essential-title">Tested Character</div>
+      <p class="essential-act"><strong>Agent activity:</strong> sets a weekly character challenge — honesty, courage, patience — and helps them reflect on what they learned when it got hard.</p>
+    </div>
+  </div>
+
+  <div class="reflection">
+    <div class="reflection-label">How Personalisation Works</div>
+    <p>The agent isn't reading from a script. During the live sessions, your teen tells the agent about themselves — what they like, what's hard, what their week looks like. The agent uses that to design activities that actually fit. A sporty kid gets a different Body-as-Temple challenge than a bookish one. A teen who's anxious about screens gets a gentler Digital Self-Defence ramp than one who's already cutting back. Every activity is saved locally with a short reflection. By the end of four weeks, your teen has a portfolio of eight personalised essential challenges — and an agent that knows them well enough to keep going.</p>
+  </div>
+</div>
+
+<!-- ===== PICK YOUR TIER ===== -->
+<div class="section">
+  <div class="section-num">Part 4 — Pick Your Tier</div>
+  <h2 class="section-title">How the agent <em>runs</em>.</h2>
+  <p>Before installing anything, choose how the agent will run. There are three tiers. All three do exactly the same job — the difference is where the language model lives and what it costs.</p>
+
+  <div class="tiers">
+    <div class="tier-card recommended">
+      <span class="tier-badge">Recommended</span>
+      <div class="tier-name">Tier 1 — Local-First</div>
+      <div class="tier-price"><strong>Free</strong> · forever</div>
+      <p class="tier-desc">Uses <a href="https://lmstudio.ai">LM Studio</a> + small open-source models on this computer. The conversational model is Qwen3.5 8B (or LFM2-24B-A2B on beefier hardware). The compact model is <a href="https://lmstudio.ai/models/liquid/lfm2-1.2b">Liquid LFM2 1.2B</a>, designed for on-device. No data leaves the device at any point.</p>
+      <p class="tier-best"><strong>Best for:</strong> families who want maximum privacy, no subscriptions, no internet dependency.</p>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-name">Tier 2 — OpenCode Go (cloud)</div>
+      <div class="tier-price"><strong>$5 first month, then $10/month</strong></div>
+      <p class="tier-desc">Uses <a href="https://opencode.ai/go?ref=6RBASHMZK0">OpenCode Go</a> for the conversational model (Kimi K3, Grok 4.5, GLM-5, etc. — pick any from their catalogue). The compact LFM2 1.2B still runs locally for the morning-minute generator and reflection classifier. Conversations hit OpenCode's servers; everything else stays on the device.</p>
+      <p class="tier-best"><strong>Best for:</strong> laptops that can't run big models locally, faster conversations, parents who don't mind a small subscription.</p>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-name">Tier 3 — Bring Your Own</div>
+      <div class="tier-price"><strong>Variable</strong> · depends on provider</div>
+      <p class="tier-desc">You already have an API key for Claude, OpenAI, OpenRouter, Grok, or any other provider Hermes supports. The local LFM2 1.2B still runs for compact tasks. Use whatever model you trust.</p>
+      <p class="tier-best"><strong>Best for:</strong> existing subscribers, power users, anyone who knows exactly what they want.</p>
+    </div>
+  </div>
+
+  <h3>What each model actually does</h3>
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Tier 1 (Local)</th>
+        <th>Tier 2 (OpenCode Go)</th>
+        <th>Tier 3 (BYO)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Conversational</strong></td>
+        <td>Qwen3.5 8B / LFM2-24B-A2B (LM Studio)</td>
+        <td>Kimi K3 or any model in the Go catalogue</td>
+        <td>Your chosen provider</td>
+      </tr>
+      <tr>
+        <td><strong>Compact (subtasks)</strong></td>
+        <td>Liquid LFM2 1.2B (LM Studio)</td>
+        <td>Liquid LFM2 1.2B (LM Studio)</td>
+        <td>Liquid LFM2 1.2B (LM Studio)</td>
+      </tr>
+      <tr>
+        <td><strong>Data locality</strong></td>
+        <td>100% local</td>
+        <td>Conversations hit OpenCode servers</td>
+        <td>Depends on provider</td>
+      </tr>
+      <tr>
+        <td><strong>Cost</strong></td>
+        <td>$0</td>
+        <td>$5 / $10 per month</td>
+        <td>Provider rate</td>
+      </tr>
+      <tr>
+        <td><strong>Internet required?</strong></td>
+        <td>No (after first setup)</td>
+        <td>Yes, for chat</td>
+        <td>Yes, for chat</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="reflection">
+    <div class="reflection-label">Why a Local Compact Model, Even in the Cloud Tier</div>
+    <p>Even on Tier 2 or Tier 3, we keep Liquid LFM2 1.2B running locally. It's used for the small tasks: generating the Morning Minute template, classifying reflections (real vs deflected), picking the right wisdom quote for the day's essential, and rewriting text for the TTS engine. These are offline-immune — if your teen's wifi drops during the afterschool chat, the local model keeps running, queues tasks, and the chat resumes seamlessly when connectivity returns.</p>
+  </div>
+</div>
+
+<!-- ===== SET UP YOUR AGENT ===== -->
+<div class="section" id="setup">
+  <div class="section-num">Part 5 — Set Up Your Agent</div>
+  <h2 class="section-title">Five minutes from now you'll have a working agent.</h2>
+  <p>All the install scripts live in the <a href="https://github.com/boktoday/afterschool-agent-2">GitHub repo</a>. You'll clone it, run one script, answer a few questions, and you're live.</p>
+
+  <h3>1. Clone the repo</h3>
+<pre><code>git clone https://github.com/boktoday/afterschool-agent-2.git
+cd afterschool-agent-2</code></pre>
+
+  <h3>2. Install Hermes (if you don't have it)</h3>
+<pre><code># macOS, Linux, WSL
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+
+# Windows (PowerShell)
+irm https://hermes-agent.nousresearch.com/install.ps1 | iex</code></pre>
+
+  <h3>3. Run the setup script</h3>
+<pre><code>./setup.sh</code></pre>
+
+  <p>The setup script will ask you a series of questions. Here's what to expect:</p>
+
+  <ol class="checklist">
+    <li><strong>Which tier?</strong> Local / OpenCode Go / Bring Your Own</li>
+    <li><strong>If Tier 2:</strong> paste your OpenCode Go API key (get one at <a href="https://opencode.ai/go?ref=6RBASHMZK0">opencode.ai/go</a>)</li>
+    <li><strong>Your teen's name</strong> (used in agent greetings, stored locally)</li>
+    <li><strong>Faith posture</strong> (Christian / spiritual-but-not-religious / secular / other — shapes the wisdom quotes)</li>
+    <li><strong>What's hard right now</strong> (one sentence — helps the personalisation questions land)</li>
+  </ol>
+
+  <p>Then the script does the rest:</p>
+<pre><code>✓ Checking LM Studio... found at /Applications/LM Studio.app
+✓ Starting LM Studio server on localhost:1234
+✓ Downloading Liquid LFM2 1.2B to slot 2... (235 MB)
+✓ Downloading Qwen3.5 8B to slot 1... (4.7 GB)
+✓ Writing Hermes provider config to ~/.hermes/config.yaml
+✓ Installing orchestrator skill: one-to-eight-orchestrator
+✓ Installing 8 per-essential skill templates
+✓ Creating sidebar projects:
+  · One to Eight
+  · Silence & Stillness
+  · Body as Temple
+  · Scripture & Wisdom
+  · Nature Connection
+  · Digital Self-Defence
+  · Life Skills
+  · Real Community
+  · Tested Character
+✓ Setting initial memory keys
+✓ Done.
+
+Open Hermes. Click the "One to Eight" project in your sidebar.
+Say "start the course" to begin.</code></pre>
+
+  <div class="callout">
+    <div class="callout-label">What Just Got Installed</div>
+    <ul>
+      <li><strong>Hermes Agent</strong> — the open-source local-first agent runtime.</li>
+      <li><strong>LM Studio</strong> — local model server (only if Tier 1 or 2).</li>
+      <li><strong>Liquid LFM2 1.2B</strong> — the compact model, ~235 MB.</li>
+      <li><strong>Qwen3.5 8B</strong> — the conversational model, ~4.7 GB (or LFM2-24B-A2B ~14 GB on Tier 1 with enough RAM).</li>
+      <li><strong>9 sidebar projects</strong> — one orchestrator, eight per-essential.</li>
+      <li><strong>9 skill files</strong> — loaded into <code>~/.hermes/skills/productivity/</code>.</li>
+    </ul>
+  </div>
+
+  <h3>If You Chose Tier 2 (OpenCode Go) — Pricing Note</h3>
+  <p>Your first month is <strong>$5</strong>, then it converts to <strong>$10/month</strong>. Cancel any time at <a href="https://opencode.ai">opencode.ai</a>. The setup script prints a reminder with the exact renewal date. You can also subscribe at <a href="https://opencode.ai/go?ref=6RBASHMZK0">opencode.ai/go</a>.</p>
+</div>
+
+<!-- ===== PERSONALISATION QUESTIONS ===== -->
+<div class="section">
+  <div class="section-num">Part 6 — Personalisation Questions</div>
+  <h2 class="section-title">What the agent asks, and <em>why</em>.</h2>
+  <p>During the first afterschool chat, your teen's agent walks them through a short personalisation flow. Every answer is stored <strong>locally on the device</strong> — never uploaded, never shared, deletable at any time. Here's what gets asked, and what the agent does with each answer:</p>
+
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Why we ask</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>What's your name?</strong></td>
+        <td>So the agent can greet you personally, refer back to you, and use your name sparingly (not every message — that gets old fast).</td>
+      </tr>
+      <tr>
+        <td><strong>How old are you?</strong></td>
+        <td>Shapes tone. A 13-year-old gets different vocabulary and pacing than a 17-year-old. The agent doesn't pretend to be a peer — it adjusts how much hand-holding the conversation needs.</td>
+      </tr>
+      <tr>
+        <td><strong>What's a typical day look like for you?</strong></td>
+        <td>The agent uses this to schedule the Morning Minute at the right time, suggest Planning Sessions when you're most likely to be free, and design activities that fit (e.g. walks before school if you have time, not at 11pm).</td>
+      </tr>
+      <tr>
+        <td><strong>What do you actually enjoy?</strong></td>
+        <td>The agent weaves your interests into the essential challenges. A kid who loves basketball gets a Body-as-Temple challenge about rest and recovery, not just generic "drink water" reminders.</td>
+      </tr>
+      <tr>
+        <td><strong>What's hard right now?</strong></td>
+        <td>The agent uses this to decide which essentials to lead with. If screen-time is the problem, Digital Self-Defence isn't just a topic — it's first in the queue. If school stress is the issue, the Morning Minute gets more grounding in week 1.</td>
+      </tr>
+      <tr>
+        <td><strong>Faith-wise, where are you coming from?</strong></td>
+        <td>Shapes the wisdom quotes the agent shares. Christian / Muslim / Jewish / Buddhist / Hindu / secular humanist / Stoic / spiritual-but-not-religious / other — each path has its own library of wisdom the agent can draw from.</td>
+      </tr>
+      <tr>
+        <td><strong>How do you want me to talk to you?</strong></td>
+        <td>The agent doesn't have one voice. It can be chatty, or quiet. It can use slang, or be formal. It can call you by name every message, or once at the start. This question gives your teen permission to be explicit.</td>
+      </tr>
+      <tr>
+        <td><strong>Is there anything you want me to avoid?</strong></td>
+        <td>Topics, tones, metaphors — anything that doesn't land. The agent respects this for the life of the project.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="reflection">
+    <div class="reflection-label">For Parents</div>
+    <p>You're welcome to sit with your teen during the personalisation flow. The questions are designed to be answered by the teen themselves, not by you — but there's no rule. If you'd rather they answer alone, the agent will gently close the chat and continue the personalisation when they're ready. All answers live in <code>~/.hermes/state.db</code> on their device. You can read them any time, or wipe them with a single command.</p>
+  </div>
+</div>
+
+<!-- ===== THE EIGHT SKILL TEMPLATES ===== -->
+<div class="section">
+  <div class="section-num">Part 7 — The Eight Skill Templates</div>
+  <h2 class="section-title">What each of the eight skills <em>looks like</em>.</h2>
+  <p>Every essential comes with a starter skill — a small file the teen reads during the live sessions, then personalises. Here's the silence skill as an example. The other seven follow the same shape.</p>
+
+  <div class="skill-card">
+    <div class="skill-card-head">
+      <span class="skill-card-emoji">🕯️</span>
+      <div>
+        <div class="skill-card-title">Silence & Stillness</div>
+        <div class="skill-card-name">skills/silence-stillness/SKILL.md</div>
+      </div>
+    </div>
+<pre><code><span class="comment">---</span>
+<span class="kw">name</span>: silence-stillness
+<span class="kw">description</span>: Help Alex practise daily stillness —
+  a one-minute timer, a reflection prompt, and a
+  personalised challenge scaled to where they are.
+<span class="comment">---</span>
+
+<span class="comment"># Silence & Stillness — Personal Skill for Alex</span>
+
+You are Alex's stillness companion. Each session:
+<span class="kw">1.</span> Offer a <span class="string">60-second</span> silence timer
+<span class="kw">2.</span> Ask what they noticed
+<span class="kw">3.</span> Set tomorrow's challenge (Level 1 / 2 / 3)
+
+<span class="comment">&lt;!-- TODO: Alex's context — what time of day works
+     for them, what makes stillness hard, what helps --&gt;</span>
+
+<span class="comment">## Voice</span>
+Talk like a thoughtful friend, not a teacher.
+<span class="comment">&lt;!-- TODO: replace this with how Alex wants to be
+     talked to --&gt;</span>
+
+<span class="comment">## Reflection prompts</span>
+- The first 5 minutes of the morning, before the phone.
+- The last 5 minutes of the evening, before sleep.
+<span class="comment">&lt;!-- TODO: add prompts Alex has found useful --&gt;</span></code></pre>
+    <p class="skill-card-desc">The teen reads this template during the live Wednesday session, fills in their context in the <code>&lt;!-- TODO --&gt;</code> blocks, and now the skill is <em>theirs</em>. The agent knows them. It's not a generic LLM with a system prompt — it's an LLM with a per-teen skill file.</p>
+  </div>
+
+  <h3>The full set</h3>
+  <div class="essentials">
+    <div class="essential-card">
+      <span class="essential-emoji">🕯️</span>
+      <div class="essential-title">silence-stillness</div>
+      <p class="essential-act">Timer + reflection + daily challenge.</p>
+    </div>
+    <div class="essential-card">
+      <span class="essential-emoji">🏃</span>
+      <div class="essential-title">body-temple</div>
+      <p class="essential-act">Tracks one chosen health habit without nagging.</p>
+    </div>
+    <div class="essential-card">
+      <span class="essential-emoji">📖</span>
+      <div class="essential-title">scripture-wisdom</div>
+      <p class="essential-act">Daily passage + reflection question tied to their week.</p>
+    </div>
+    <div class="essential-card">
+      <span class="essential-emoji">🌿</span>
+      <div class="essential-title">nature-connection</div>
+      <p class="essential-act">Outdoor action based on location and weather.</p>
+    </div>
+    <div class="essential-card">
+      <span class="essential-emoji">📱</span>
+      <div class="essential-title">digital-self-defence</div>
+      <p class="essential-act">Weekly screen-time review + one new boundary.</p>
+    </div>
+    <div class="essential-card">
+      <span class="essential-emoji">🔧</span>
+      <div class="essential-title">life-skills</div>
+      <p class="essential-act">One real-world skill per week, broken into steps.</p>
+    </div>
+    <div class="essential-card">
+      <span class="essential-emoji">🤝</span>
+      <div class="essential-title">real-community</div>
+      <p class="essential-act">One connection action, followed up after.</p>
+    </div>
+    <div class="essential-card">
+      <span class="essential-emoji">⭐</span>
+      <div class="essential-title">tested-character</div>
+      <p class="essential-act">Weekly character challenge + reflection on difficulty.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HOW TO WRITE YOUR OWN SKILLS ===== -->
+<div class="section">
+  <div class="section-num">Part 8 — How to Write Your Own Skills</div>
+  <h2 class="section-title">By week 4, you'll be writing these <em>yourself</em>.</h2>
+  <p>Every Hermes skill has the same shape. Four pieces: <strong>frontmatter</strong>, <strong>voice</strong>, <strong>memory</strong>, and <strong>ritual hook</strong>. Once your teen knows the shape, they can write a 9th skill — for homework, for their hobby, for anything they want an agent to do.</p>
+
+  <h3>The Shape of a Skill</h3>
+<pre><code><span class="comment">---</span>
+<span class="kw">name</span>: homework-helper
+<span class="kw">description</span>: Help Alex with maths and English homework.
+  Doesn't give answers — asks the right questions.
+<span class="comment">---</span>
+
+<span class="comment"># Homework Helper — Personal Skill for Alex</span>
+
+<span class="comment">## Voice</span>
+Patient. Socratic. Never gives the answer directly —
+asks one question at a time. Celebrates the moment
+Alex figures it out themselves.
+
+<span class="comment">## Memory</span>
+- <span class="string">homework_current_topic</span>: what they're working on today
+- <span class="string">homework_stuck_on</span>: where they got stuck last session
+- <span class="string">homework_style</span>: how Alex learns best (worked example,
+  analogy, diagrams, step-by-step)
+
+<span class="comment">## Ritual hook</span>
+Runs as part of the Afterschool Chat (Ritual 1).
+If Alex mentions homework, this skill takes over.
+
+<span class="comment">## What this skill does NOT do</span>
+- Doesn't write essays for Alex
+- Doesn't do the maths for them
+- Doesn't pretend to know things it doesn't</code></pre>
+
+  <h3>The Pattern</h3>
+  <ol>
+    <li><strong>Frontmatter.</strong> Name and one-sentence description. This is what the orchestrator sees when deciding which skill to delegate to.</li>
+    <li><strong>Voice.</strong> 2-4 sentences on tone. Not what to say, but how to say it. Be explicit. "Patient. Socratic. Never gives the answer directly."</li>
+    <li><strong>Memory.</strong> The keys this skill reads and writes. Skills are honest about what they need to remember.</li>
+    <li><strong>Ritual hook.</strong> When does this skill fire? Morning Minute? Afterschool Chat? A specific essential? Be specific.</li>
+    <li><strong>What this skill does NOT do.</strong> This is the most important section. Negative constraints are what keep agents from drifting into behaviour the teen didn't ask for.</li>
+  </ol>
+
+  <div class="callout">
+    <div class="callout-label">Try It Yourself</div>
+    <p>After the four weeks, the teen should be able to write a 9th skill — maybe a <code>guitar-practice-coach</code>, a <code>volunteer-log-keeper</code>, a <code>conversation-starter</code> for when they're nervous at parties. Anything that fits their life. The skill system is the point. The eight essentials are the curriculum.</p>
+  </div>
+</div>
+
+<!-- ===== MAKING THE MOST OF THE RITUALS ===== -->
+<div class="section">
+  <div class="section-num">Part 9 — Making the Most of the Rituals</div>
+  <h2 class="section-title">How to actually <em>use</em> the three rituals well.</h2>
+
+  <h3>The Afterschool Chat (4:30 PM)</h3>
+  <ul>
+    <li><strong>Don't skip days.</strong> The agent learns you from these chats. Every skipped day is data the agent doesn't have. Even five minutes counts.</li>
+    <li><strong>Be specific.</strong> "School was okay" gives the agent less to work with than "Maths was fine but English was rough — we got a new teacher and she's intense." Specificity unlocks personalisation.</li>
+    <li><strong>Let the agent finish.</strong> It will sometimes ask a follow-up or notice something you didn't say. That's not nagging — it's the reflection pattern working.</li>
+    <li><strong>Push back.</strong> If the agent gives advice you didn't ask for, say so. "I just wanted to vent" is a valid response. The agent recalibrates.</li>
+  </ul>
+
+  <h3>The Planning Session (Evening)</h3>
+  <ul>
+    <li><strong>Run it the night before, not the morning of.</strong> The Morning Minute is generated from the plan. If the plan doesn't exist, the minute has nothing to work with.</li>
+    <li><strong>One real-world thing.</strong> Not "be healthier" — "walk to school tomorrow instead of getting a lift." The agent will remind you of the walk in the morning.</li>
+    <li><strong>Edit the agent's draft.</strong> It will propose tasks. You decide which ones are real. This is the part that makes the plan yours.</li>
+    <li><strong>Keep it short.</strong> 3-5 tasks is plenty. The point isn't productivity theatre — it's actually knowing what tomorrow looks like.</li>
+  </ul>
+
+  <h3>The Morning Minute (Auto-generated)</h3>
+  <ul>
+    <li><strong>Press play before you touch your phone.</strong> This is the moment. The first thing you hear shapes the day. Let the agent have it.</li>
+    <li><strong>One breath at the end.</strong> The agent builds a pause into the audio. Use it.</li>
+    <li><strong>If the minute feels wrong, edit the plan.</strong> The Morning Minute is downstream. If you don't like what it says, change the inputs the night before.</li>
+    <li><strong>Skip days with intention, not by accident.</strong> If you skip it, log why. "Was rushing" is a useful answer. "Forgot" is a habit worth breaking.</li>
+  </ul>
+
+  <div class="reflection">
+    <div class="reflection-label">The Two-Minute Rule</div>
+    <p>If the agent asks something that would take less than two minutes to do right now (try a breath, name one thing you're grateful for, write down the time), do it now. The reflection isn't about the response — it's about the act of pausing long enough to respond. The longer you put it off, the less the practice sticks.</p>
+  </div>
+</div>
+
+<!-- ===== SAFETY & PRIVACY ===== -->
+<div class="section">
+  <div class="section-num">Part 10 — Safety & Privacy</div>
+  <h2 class="section-title">Where the data lives, who can see it, and how to <em>wipe it</em>.</h2>
+
+  <h3>What gets stored</h3>
+  <ul>
+    <li><strong>Personalisation answers</strong> (name, age, day shape, faith posture, what to avoid) — stored in <code>~/.hermes/state.db</code> on the device.</li>
+    <li><strong>Conversation history</strong> — stored in <code>~/.hermes/sessions/</code> as JSONL transcripts. Local. Plain text. Searchable with <code>grep</code>.</li>
+    <li><strong>Plans and morning minutes</strong> — stored as Markdown files in <code>~/.hermes/projects/one-to-eight/plans/</code>.</li>
+    <li><strong>Skill files</strong> — stored in <code>~/.hermes/skills/productivity/&lt;skill-name&gt;/</code>.</li>
+    <li><strong>Nothing else.</strong> No telemetry, no analytics, no phone-home.</li>
+  </ul>
+
+  <h3>Who can see it</h3>
+  <ul>
+    <li><strong>Tier 1 (Local):</strong> Only people with access to the device. If the teen has their own laptop, that's them. If it's a shared family computer, everyone.</li>
+    <li><strong>Tier 2 (OpenCode Go):</strong> Conversations are sent to OpenCode's servers. OpenCode's privacy policy applies. Skills, plans, and personalisation answers still stay local.</li>
+    <li><strong>Tier 3 (BYO):</strong> Whatever the provider's policy is. Read it before you choose.</li>
+  </ul>
+
+  <h3>How to wipe everything</h3>
+<pre><code><span class="comment"># Wipe all session history</span>
+rm -rf ~/.hermes/sessions/*
+
+<span class="comment"># Wipe personalisation memory</span>
+rm -rf ~/.hermes/state.db
+
+<span class="comment"># Wipe everything (full reset)</span>
+rm -rf ~/.hermes/
+
+<span class="comment"># Or, if you want to keep the install but lose the teen's data:</span>
+hermes memory clear --target user</code></pre>
+
+  <h3>For Parents — Quick Sanity Checks</h3>
+  <ul>
+    <li><strong>Read the session files.</strong> They're plain text. Open <code>~/.hermes/sessions/</code> in any text editor. Skim. You'll see everything your teen has said to the agent.</li>
+    <li><strong>Read the skill files.</strong> <code>~/.hermes/skills/productivity/</code>. The skill files contain the personalisation answers and the agent's voice instructions. They're not encrypted.</li>
+    <li><strong>Watch the model.</strong> If your teen is on Tier 2, you can see in the terminal when conversations are being sent to OpenCode's servers. The agent doesn't hide this.</li>
+  </ul>
+</div>
+
+<!-- ===== THE LIVE PROGRAMME ===== -->
+<div class="section">
+  <div class="section-num">Part 11 — The Live Programme</div>
+  <h2 class="section-title">Four weeks. Three sessions a week. <em>One hour each.</em></h2>
+  <p class="section-lede">Log on from home. Each session covers a piece of the build, then we practise together live. Miss a day? Come the next one — the programme repeats and you can jump back in.</p>
+
+  <ul class="timeline">
+    <li>
+      <span class="timeline-dot"></span>
+      <div class="timeline-week">Week 1 · Foundations + Essential 1: Silence & Stillness</div>
+      <p class="timeline-body">Install Hermes on a home computer. Learn what a local-first agent is and why data stays on the device. Set up the Afterschool Chat. The agent learns who your teen is and designs their first personalised Silence & Stillness activity.</p>
+    </li>
+    <li>
+      <span class="timeline-dot"></span>
+      <div class="timeline-week">Week 2 · Planning + Essentials 2 & 3: Body & Wisdom</div>
+      <p class="timeline-body">Build the evening planning ritual. The agent now designs Body-as-Temple and Scripture & Wisdom activities tailored to your teen. Plans save locally. The agent connects each essential to the plan for the week.</p>
+    </li>
+    <li>
+      <span class="timeline-dot"></span>
+      <div class="timeline-week">Week 3 · Morning Minute + Essentials 4 & 5: Nature & Digital Defence</div>
+      <p class="timeline-body">Configure text-to-speech. The agent generates a one-minute audio briefing overnight, weaving in the essential of the week. Your teen wakes up, presses play, and starts the day with intention. Nature Connection and Digital Self-Defence activities go live.</p>
+    </li>
+    <li>
+      <span class="timeline-dot"></span>
+      <div class="timeline-week">Week 4 · Extend + Essentials 6, 7 & 8: Life Skills, Community, Character</div>
+      <p class="timeline-body">The final three essentials are configured. The agent now cycles through all eight, adapting activities as your teen grows. We extend the agent for homework help and research. Your teen learns to write their own agent skills. Certificate of completion.</p>
+    </li>
+  </ul>
+
+  <h3>Pricing</h3>
+  <div class="tier-card">
+    <div class="tier-name">$44.88 per week · 4 weeks total</div>
+    <ul style="margin: 1rem 0; padding-left: 1.4rem;">
+      <li>3 live webcasts per week (Mon · Wed · Fri at 4:30 PM)</li>
+      <li>One-on-one help during each session</li>
+      <li>All eight essentials personalised with activities for your teen</li>
+      <li>Hermes agent software — free, local-first, no subscription</li>
+      <li>The three daily rituals configured by week 4</li>
+      <li>Text-to-speech morning briefings running automatically</li>
+      <li>A portfolio of eight personalised essential challenges</li>
+      <li>Skills to extend the agent for school and homework</li>
+      <li>Certificate of completion</li>
+      <li>Drop in any session — all sessions recorded for catch-up</li>
+    </ul>
+    <p style="font-size: 9.5pt; color: var(--muted); font-style: italic;">Pay weekly. Come to any session, any week. The software is free forever — you're paying for the live instruction, the guided build, and the community of teens learning alongside yours.</p>
+  </div>
+
+  <h3>The Instructor</h3>
+  <div class="callout">
+    <div class="callout-label">Every Live Session is Run by a Screened Instructor</div>
+    <p>The Afterschool Agent programme is hosted by a safeguarding-cleared facilitator. Four verified credentials:</p>
+    <ul>
+      <li><strong>Working with Children Check</strong> — state-issued clearance.</li>
+      <li><strong>NDIS Worker Screening</strong> — strict conduct and safety standards.</li>
+      <li><strong>First Aid & CPR</strong> — current accredited training.</li>
+      <li><strong>Youth Mental Health First Aid</strong> — recognising and responding to mental health challenges.</li>
+    </ul>
+    <p><em>Four checks. One promise: your teen learns in a space that is supervised, safe, and accountable.</em></p>
+  </div>
+</div>
+
+<!-- ===== FAQ ===== -->
+<div class="section">
+  <div class="section-num">Part 12 — Questions</div>
+  <h2 class="section-title">Things parents <em>ask</em>.</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Does my teen need to know how to code?</div>
+    <div class="faq-a">No. Hermes is a natural-language agent platform — your teen configures it by talking to it and writing plain-English instructions in skill files. We teach everything step by step in the live sessions. If they can use a chat app, they can build an agent.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What equipment do we need?</div>
+    <div class="faq-a">A laptop or desktop computer (Windows, Mac, or Linux) with internet access for the live webcast. That's it. The Hermes software is free and runs locally. No special hardware, no GPU, no cloud account. Tier 1 needs at least 16 GB RAM for the conversational model. Tier 2 only needs 8 GB (the small model runs on the compact slot).</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Is my teen's data safe?</div>
+    <div class="faq-a">Yes — on Tier 1, everything runs on your home computer. No data is sent to the cloud. No accounts to create with third parties. On Tier 2, conversations are sent to OpenCode's servers for processing. OpenCode's privacy policy applies to those conversations, but your teen's plans, skill files, and personalisation answers stay local.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What if we miss a session?</div>
+    <div class="faq-a">No problem. Every session is recorded and made available to enrolled teens. Miss Monday? Catch the recording before Friday's session. Miss a whole week? You can still catch up on your own time. The programme is designed so you never fall behind — every recording is accessible for the full four weeks and beyond.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What age is this for?</div>
+    <div class="faq-a">Designed for ages 12 to 17. The content is the eight essentials from the onetoeight programme — silence, body, scripture, nature, digital self-defence, life skills, community, and tested character. The agent build is age-appropriate and doesn't require any prior technical knowledge.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can siblings join?</div>
+    <div class="faq-a">Yes — one enrolment covers one teen, but siblings can sit in on the webcast and build their own agents on the same computer. Each agent runs independently with its own memory and personality.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What happens after four weeks?</div>
+    <div class="faq-a">The agent is yours forever. The software is free. Your teen keeps the three daily rituals running and can extend the agent on their own — for homework, projects, research, anything. Optional follow-on sessions may be offered if there's demand.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Why is OpenCode Go recommended instead of just OpenRouter?</div>
+    <div class="faq-a">OpenCode Go is purpose-built for agents — they test which models work well with agent loops, tool calling, and multi-turn conversations, then bundle them at $10/month with generous usage limits. For a teen's daily use, the pricing is much more predictable than per-token OpenRouter billing, and the model selection is curated rather than overwhelming.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">What's the difference between this and ChatGPT?</div>
+    <div class="faq-a">ChatGPT is a general-purpose assistant with no memory of your teen, no personalisation, no daily-ritual structure, and no curriculum. This is the opposite — a dedicated companion that knows your teen's name, their week, their faith posture, and which of the eight essentials they're working on. And on Tier 1, none of it leaves the device.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Can my teen use this without enrolling in the live programme?</div>
+    <div class="faq-a">Yes. The setup script, the skill templates, and the personalisation flow all work without enrolling. The live programme adds: a screened instructor walking them through the first build, recorded sessions they can replay, and the certificate. If your teen is comfortable with the install steps and motivated to customise the skill templates themselves, they can do this solo for free.</div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <h3>Give your teen an agent that teaches the eight.</h3>
+  <p>Four weeks. Three sessions a week. One hour each. $44.88 a week. A local-first AI companion they built themselves.</p>
+  <p>Or, set it up yourself — the software is free, the GitHub repo is open, and your teen can be running in an hour.</p>
+  <a href="https://opencode.ai/go?ref=6RBASHMZK0" class="footer-cta">Enrol — $44.88/week →</a>
+  <a href="https://github.com/boktoday/afterschool-agent-2" class="footer-cta" style="background: transparent; border: 1px solid var(--amber-light); margin-left: 0.5rem;">Self-Serve from GitHub →</a>
+  <div class="footer-meta">Afterschool Agent is a live instructional programme · Hermes is free and open-source · All sessions are supervised · No data leaves your device (Tier 1) · Pricing is per teen per week · Cancellation at any time — no lock-in</div>
+</footer>
+
+</body>
+</html>

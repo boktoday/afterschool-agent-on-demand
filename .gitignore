@@ -1,0 +1,17 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Local publish state
+.herenow/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
