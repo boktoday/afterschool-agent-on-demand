@@ -4,7 +4,7 @@ On-demand training + weekly live Q&A where young people build a personal AI agen
 
 ## Live
 
-**https://onetoeight.org/afterschool-agent**
+**https://www.afterschool.agency**
 
 ## What's in this repo
 
@@ -60,7 +60,7 @@ The full guide is at [https://onetoeight.org](https://onetoeight.org).
 
 2. Edit `index.html` to suit your programme (price, schedule, contact info, etc.)
 
-3. Publish to [here.now](https://here.now) or your preferred host.
+3. Publish to your preferred host.
 
 ## Licence
 
